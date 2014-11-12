@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
@@ -22,7 +23,7 @@ import javax.persistence.ManyToOne;
  *
  * @author leonardo
  */
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Entity
 public class Midia implements Serializable {
 
@@ -37,10 +38,16 @@ public class Midia implements Serializable {
     @JoinColumn(name = "perfil_username")
     private Perfil perfil;
 
-    @ManyToMany(targetEntity = Diretor.class, mappedBy = "midias")
+    @ManyToMany
+    @JoinTable(name = "midia_has_diretores", 
+            joinColumns = {@JoinColumn(name = "id_midia")}, 
+            inverseJoinColumns = {@JoinColumn(name = "id_diretor")})
     private Collection<Diretor> diretores;
 
-    @ManyToMany(targetEntity = Genero.class, mappedBy = "midias")
+    @ManyToMany
+    @JoinTable(name = "midia_has_generos", 
+            joinColumns = {@JoinColumn(name = "id_midia")}, 
+            inverseJoinColumns = {@JoinColumn(name = "id_genero")})
     private Collection<Genero> generos;
 
     private String titulo;

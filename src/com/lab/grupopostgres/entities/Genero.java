@@ -29,7 +29,7 @@ public class Genero implements Serializable {
     
     private String genero;
     
-    @ManyToMany(targetEntity = Midia.class)
+    @ManyToMany(mappedBy = "generos")
     private Collection<Midia> midias;
     
     public Long getId() {

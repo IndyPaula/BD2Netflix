@@ -29,7 +29,7 @@ public class Diretor implements Serializable {
 
     private String nome;
 
-    @ManyToMany(targetEntity = Midia.class)
+    @ManyToMany(mappedBy = "diretores")
     private Collection<Midia> midias;
     
     public Diretor() {
