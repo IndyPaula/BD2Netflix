@@ -10,11 +10,10 @@ import java.util.Collection;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 /**
  *
@@ -33,9 +32,7 @@ public class Perfil implements Serializable {
     @JoinColumn(name = "perfil_id_conta", nullable = false)
     private Conta conta;
 
-    @OneToMany(targetEntity = Midia.class,
-            mappedBy = "perfil",
-            fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "perfis")
     private Collection<Midia> midias;
 
     public Perfil() {

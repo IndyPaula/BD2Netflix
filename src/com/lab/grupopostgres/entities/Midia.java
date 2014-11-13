@@ -23,9 +23,9 @@ import javax.persistence.ManyToOne;
  *
  * @author leonardo
  */
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.JOINED)
 @Entity
-public class Midia implements Serializable {
+public abstract class Midia implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -34,26 +34,34 @@ public class Midia implements Serializable {
     @Column(name = "id_midia")
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "perfil_username")
-    private Perfil perfil;
+    @ManyToMany
+    @JoinTable(name = "midia_perfis",
+            joinColumns = {
+                @JoinColumn(name = "id_midia")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "username")})
+    private Collection<Perfil> perfis;
 
     @ManyToMany
-    @JoinTable(name = "midia_has_diretores", 
-            joinColumns = {@JoinColumn(name = "id_midia")}, 
-            inverseJoinColumns = {@JoinColumn(name = "id_diretor")})
+    @JoinTable(name = "midia_diretores",
+            joinColumns = {
+                @JoinColumn(name = "id_midia")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "id_diretor")})
     private Collection<Diretor> diretores;
 
     @ManyToMany
-    @JoinTable(name = "midia_has_generos", 
-            joinColumns = {@JoinColumn(name = "id_midia")}, 
-            inverseJoinColumns = {@JoinColumn(name = "id_genero")})
+    @JoinTable(name = "midia_generos",
+            joinColumns = {
+                @JoinColumn(name = "id_midia")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "id_genero")})
     private Collection<Genero> generos;
 
     private String titulo;
-    
+
     private String classificacao;
-    
+
     public Long getId() {
         return id;
     }
@@ -73,13 +81,13 @@ public class Midia implements Serializable {
     public void setClassificacao(String classificacao) {
         this.classificacao = classificacao;
     }
-    
-    public Perfil getPerfil() {
-        return perfil;
+
+    public Collection<Perfil> getPerfis() {
+        return perfis;
     }
 
-    public void setPerfil(Perfil perfil) {
-        this.perfil = perfil;
+    public void setPerfis(Perfil perfil) {
+        this.perfis.add(perfil);
     }
 
     public Collection<Diretor> getDiretores() {
@@ -97,7 +105,7 @@ public class Midia implements Serializable {
     public void setGeneros(Genero genero) {
         this.generos.add(genero);
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 0;

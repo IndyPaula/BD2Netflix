@@ -5,6 +5,7 @@
  */
 package com.lab.grupopostgres.tests;
 
+import com.lab.grupopostgres.entities.Anime;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -14,13 +15,27 @@ import javax.persistence.Persistence;
  * @author leonardo
  */
 public class TestJPA {
-    
+
     public static void main(String[] args) {
-        
-        EntityManagerFactory factory 
+
+        EntityManagerFactory factory
                 = Persistence.createEntityManagerFactory("NetflixPU");
         EntityManager em = factory.createEntityManager();
+
+        em.getTransaction().begin();
+
+        Anime a = new Anime();
         
+        a.setQualidade("boa");
+        
+        a.setTitulo("Naruto");
+        
+        
+        em.persist(a);
+        
+        
+        em.getTransaction().commit();
+
         em.close();
         factory.close();
     }

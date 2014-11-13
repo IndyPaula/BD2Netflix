@@ -32,11 +32,11 @@ public class Temporada implements Serializable {
     private Long id;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "seriado_id_midia", nullable = false)
+    @JoinColumn(name = "seriado_id_midia")
     private Seriado seriado;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "anime_id_midia", nullable = false)
+    @JoinColumn(name = "anime_id_midia")
     private Anime anime;
 
     @OneToMany(targetEntity = Capitulo.class,

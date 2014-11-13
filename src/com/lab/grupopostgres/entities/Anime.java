@@ -29,6 +29,8 @@ public class Anime extends Midia implements Serializable {
             updatable = false)
     private Long id;
 
+    private String qualidade;
+    
     @OneToMany(targetEntity = Temporada.class,
             mappedBy = "anime",
             fetch = FetchType.EAGER)
@@ -36,6 +38,14 @@ public class Anime extends Midia implements Serializable {
 
     public Collection<Temporada> getTemporadas() {
         return Temporadas;
+    }
+
+    public String getQualidade() {
+        return qualidade;
+    }
+
+    public void setQualidade(String qualidade) {
+        this.qualidade = qualidade;
     }
     
     @Override
